@@ -26,11 +26,15 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "tim.h"
+#include "adc.h"
 #include "dac.h"
 #include "fsmc.h"
 #include "usart.h"
 #include "stdio.h"
 #include "string.h"
+
+#include "wave_generator.h"
 
 #include "led/led.h"
 #include "atk_md0350/atk_md0350.h"
@@ -121,6 +125,10 @@ void MX_FREERTOS_Init(void) {
   */
 
 
+
+
+
+
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
@@ -134,9 +142,9 @@ void StartDefaultTask(void *argument)
     atk_md0350_show_string(20, 100, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
 
 
-    HAL_DAC_Start(&hdac, DAC1_CHANNEL_1);
-    HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_12B_R,  100);
+    wave_generator_square(600, 80);
 
+    int ssindex = 0;
 
     led_ds0_on();
   /* Infinite loop */
@@ -144,10 +152,28 @@ void StartDefaultTask(void *argument)
   {
       led_ds0_toggle();
       led_ds1_toggle();
+
+      HAL_ADC_Start(&hadc1);
+      HAL_ADC_PollForConversion(&hadc1, 100);
+      uint16_t value = HAL_ADC_GetValue(&hadc1);
+
+      char info[64];
+      snprintf(info, sizeof(info), "value:%d\r\n", value);
+      HAL_UART_Transmit(&huart1, info, strlen(info), 100);
+
+      ++ssindex;
+
+      if (ssindex % 10 == 0) {
+          wave_generator_sin(600);
+      } else if (ssindex % 5 == 0) {
+          wave_generator_square(600, 30);
+      }
+
       osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
 }
+
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
