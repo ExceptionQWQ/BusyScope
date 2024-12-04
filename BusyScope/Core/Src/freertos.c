@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "dac.h"
 #include "fsmc.h"
 #include "usart.h"
 #include "stdio.h"
@@ -120,7 +121,6 @@ void MX_FREERTOS_Init(void) {
   */
 
 
-
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
@@ -132,6 +132,11 @@ void StartDefaultTask(void *argument)
     atk_md0350_show_string(20, 60, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
     atk_md0350_show_string(20, 80, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
     atk_md0350_show_string(20, 100, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
+
+
+    HAL_DAC_Start(&hdac, DAC1_CHANNEL_1);
+    HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_12B_R,  100);
+
 
     led_ds0_on();
   /* Infinite loop */

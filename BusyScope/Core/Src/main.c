@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "dac.h"
 #include "usart.h"
 #include "gpio.h"
 #include "fsmc.h"
@@ -98,6 +99,7 @@ int main(void)
   MX_GPIO_Init();
   MX_FSMC_Init();
   MX_USART1_UART_Init();
+  MX_DAC_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_Delay(100);
