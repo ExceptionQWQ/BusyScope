@@ -126,10 +126,6 @@ void MX_FREERTOS_Init(void) {
   */
 
 
-
-
-
-
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
@@ -137,12 +133,14 @@ void StartDefaultTask(void *argument)
 
     atk_md0350_init();
 
+    atk_md0350_show_string(10, 320, 320, 12, "author:BusyBox", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
+    atk_md0350_show_string(10, 340, 320, 12, "email:busybox177634@gmail.com", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
 
-    wave_generator_sin(100);
+//    wave_generator_sin(50);
 //    wave_generator_square(100, 80);
     wave_analysis_start();
 
-    int ssindex = 0;
+
 
     led_ds0_on();
   /* Infinite loop */
@@ -151,17 +149,10 @@ void StartDefaultTask(void *argument)
       led_ds0_toggle();
 //      led_ds1_toggle();
 
-//      HAL_ADC_Start(&hadc1);
-//      HAL_ADC_PollForConversion(&hadc1, 100);
-//      uint16_t value = HAL_ADC_GetValue(&hadc1);
-
-//      char info[64];
-//      snprintf(info, sizeof(info), "value:%d\r\n", value);
-//      HAL_UART_Transmit(&huart1, info, strlen(info), 100);
-
         show_wave();
+        show_fft();
 
-      osDelay(100);
+      osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
 }

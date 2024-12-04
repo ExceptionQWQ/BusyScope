@@ -10,5 +10,6 @@ void wave_analysis_start();
 void wave_analysis_stop();
 
 void show_wave();
+void show_fft();
 
 #endif //BUSYSCOPE_WAVE_ANALYSIS_H
