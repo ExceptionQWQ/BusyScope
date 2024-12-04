@@ -6,7 +6,6 @@
 #define BUSYSCOPE_WAVE_GENERATOR_H
 
 
-
 void wave_generator_sin(int freq);
 void wave_generator_square(int freq, int duty);
 

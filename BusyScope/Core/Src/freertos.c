@@ -35,6 +35,7 @@
 #include "string.h"
 
 #include "wave_generator.h"
+#include "wave_analysis.h"
 
 #include "led/led.h"
 #include "atk_md0350/atk_md0350.h"
@@ -135,14 +136,11 @@ void StartDefaultTask(void *argument)
   /* USER CODE BEGIN StartDefaultTask */
 
     atk_md0350_init();
-    atk_md0350_show_string(20, 20, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
-    atk_md0350_show_string(20, 40, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
-    atk_md0350_show_string(20, 60, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
-    atk_md0350_show_string(20, 80, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
-    atk_md0350_show_string(20, 100, 200, 80, "Hello World", ATK_MD0350_LCD_FONT_12, ATK_MD0350_BLUE);
 
 
-    wave_generator_square(600, 80);
+    wave_generator_sin(100);
+//    wave_generator_square(100, 80);
+    wave_analysis_start();
 
     int ssindex = 0;
 
@@ -151,29 +149,22 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
       led_ds0_toggle();
-      led_ds1_toggle();
+//      led_ds1_toggle();
 
-      HAL_ADC_Start(&hadc1);
-      HAL_ADC_PollForConversion(&hadc1, 100);
-      uint16_t value = HAL_ADC_GetValue(&hadc1);
+//      HAL_ADC_Start(&hadc1);
+//      HAL_ADC_PollForConversion(&hadc1, 100);
+//      uint16_t value = HAL_ADC_GetValue(&hadc1);
 
-      char info[64];
-      snprintf(info, sizeof(info), "value:%d\r\n", value);
-      HAL_UART_Transmit(&huart1, info, strlen(info), 100);
+//      char info[64];
+//      snprintf(info, sizeof(info), "value:%d\r\n", value);
+//      HAL_UART_Transmit(&huart1, info, strlen(info), 100);
 
-      ++ssindex;
+        show_wave();
 
-      if (ssindex % 10 == 0) {
-          wave_generator_sin(600);
-      } else if (ssindex % 5 == 0) {
-          wave_generator_square(600, 30);
-      }
-
-      osDelay(1000);
+      osDelay(100);
   }
   /* USER CODE END StartDefaultTask */
 }
-
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */

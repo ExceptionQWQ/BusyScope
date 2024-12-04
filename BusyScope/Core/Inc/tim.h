@@ -34,6 +34,8 @@ extern "C" {
 
 extern TIM_HandleTypeDef htim1;
 
+extern TIM_HandleTypeDef htim2;
+
 /* USER CODE BEGIN Private defines */
 
 typedef void(*tim_callback_f)(void);
@@ -45,8 +47,8 @@ void tim1_tick();
 
 /* USER CODE END Private defines */
 
-
 void MX_TIM1_Init(void);
+void MX_TIM2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
